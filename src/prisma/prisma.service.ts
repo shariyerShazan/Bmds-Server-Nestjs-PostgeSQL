@@ -1,4 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/require-await */
+ 
+ 
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from 'generated/prisma/client';
@@ -14,17 +18,17 @@ export class PrismaService
     const pool = new Pool({
       connectionString: process.env.DATABASE_URL,
     });
-
+ 
     const adapter = new PrismaPg(pool);
 
-    super({ adapter } as any);
+    super({ adapter });
   }
   async onModuleInit() {
-    await this.$connect();
+    this.$connect();
     console.log('Prisma connected');
   }
   async onModuleDestroy() {
-    await this.$disconnect();
+    this.$disconnect();
     console.log('Prisma disconnected');
   }
 }

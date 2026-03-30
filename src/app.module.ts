@@ -15,7 +15,6 @@ import { EmployeeModule } from './modules/employee/employee.module';
 import { ProductsModule } from './modules/products/products.module';
 import { ReportModule } from './modules/report/report.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
-import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -35,7 +34,6 @@ import { UserModule } from './modules/user/user.module';
     ProductsModule,
     ReportModule,
     AnalyticsModule,
-    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, SeedService],

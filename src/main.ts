@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { NestFactory } from '@nestjs/core';
@@ -14,16 +15,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bodyParser: false });
   console.log('📍 NestFactory app created');
 
-  app.use(
-    express.json({
-      limit: '50mb',
-      verify: (req: any, res, buf) => {
-        if (req.originalUrl.includes('/webhooks/stripe')) {
-          req.rawBody = buf;
-        }
-      },
-    }),
-  );
+  // app.use(
+  //   express.json({
+  //     limit: '50mb',
+  //     verify: (req: any, res, buf) => {
+  //       if (req.originalUrl.includes('/webhooks/stripe')) {
+  //         req.rawBody = buf;
+  //       }
+  //     },
+  //   }),
+  // );
 
   app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
@@ -55,11 +56,9 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type,Accept,Authorization',
   });
 
-  // app.setGlobalPrefix('api/v1');
-
   const config = new DocumentBuilder()
     .setTitle('BDMS API')
-    .setDescription('The BDMS API description')
+    .setDescription('The VIC_PEC API description')
     .setVersion('1.0')
     .addBearerAuth()
     .addCookieAuth('accessToken')
@@ -79,11 +78,11 @@ async function bootstrap() {
 }
 
 console.log('🚀 Calling bootstrap...');
-bootstrap()
-  .then(() => {
-    console.log('Bootstrap completed successfully');
-  })
-  .catch((error) => {
+(async () => {
+  try {
+    await bootstrap();
+  } catch (error) {
     console.error('Failed to start server:', error);
     process.exit(1);
-  });
+  }
+})();

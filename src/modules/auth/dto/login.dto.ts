@@ -5,12 +5,12 @@ export class LoginDto {
   @ApiProperty({ example: 'admin@gmail.com' })
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @ApiProperty({ example: 'admin@gmail.com' })
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password!: string;
 
   @ApiPropertyOptional({ example: 'fcm_token_123' })
   @IsOptional()

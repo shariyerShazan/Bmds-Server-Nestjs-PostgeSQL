@@ -13,35 +13,35 @@ import { Role } from 'generated/prisma/enums';
 export class AdminDto {
   @ApiProperty({ example: 'John Doe' })
   @IsString()
-  fullName: string;
+  fullName!: string;
 
   @ApiProperty({ example: 'Dhaka, Bangladesh' })
   @IsString()
-  location: string;
+  location!: string;
 }
 
 export class CreateAdminDto {
   @ApiProperty({ type: AdminDto })
   @ValidateNested()
   @Type(() => AdminDto)
-  admin: AdminDto;
+  admin!: AdminDto;
 
   @ApiProperty({ example: 'admin@mail.com' })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiPropertyOptional({ example: 'password123' })
   @IsOptional()
   @IsString()
-  password: string;
+  password!: string;
 
   @ApiProperty({ example: '01700000000' })
   @IsString()
-  contactNo: string;
+  contactNo!: string;
 
   @ApiProperty({ enum: Role, default: Role.ADMIN })
   @IsEnum(Role)
-  role: Role;
+  role!: Role;
 }
 
 export class UpdateAdminDto extends PartialType(CreateAdminDto) {}

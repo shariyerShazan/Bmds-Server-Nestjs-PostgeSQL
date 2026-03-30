@@ -14,13 +14,13 @@ export class CreateReportDto {
   @ApiProperty({ example: 'product_mongo_id' })
   //   @IsMongoId()
   @IsNotEmpty()
-  productId: string;
+  productId!: string;
 
   @ApiProperty({ example: 10 })
   @IsInt()
   @Min(1)
   @Type(() => Number)
-  qty: number;
+  qty!: number;
 
   @ApiPropertyOptional({ enum: StockType, default: StockType.IN })
   @IsEnum(StockType)

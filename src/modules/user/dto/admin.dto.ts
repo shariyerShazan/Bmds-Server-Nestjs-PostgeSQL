@@ -16,7 +16,7 @@ export class CreateAdminDto {
   @ApiProperty({ example: 'John Doe' })
   @IsString()
   @IsNotEmpty()
-  fullName: string;
+  fullName!: string;
 
   @ApiPropertyOptional({ example: 'Dhaka, Bangladesh' })
   @IsOptional()
@@ -40,19 +40,19 @@ export class CreateUserAdminDto {
   @ApiProperty({ example: 'admin@example.com' })
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @ApiPropertyOptional({ example: '+8801700000000' })
   @IsOptional()
   @IsPhoneNumber()
   @IsNotEmpty()
-  contactNo: string;
+  contactNo!: string;
 
   @ApiProperty({ example: 'password123', minLength: 6 })
   @IsString()
   @IsNotEmpty()
   @MinLength(6)
-  password: string;
+  password!: string;
 
   @ApiPropertyOptional({ enum: Lang, default: Lang.ENG })
   @IsEnum(Lang)
