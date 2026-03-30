@@ -6,7 +6,7 @@ export class CreateCategoryDto {
   @ApiProperty({ example: 'Electronics', description: 'Name of the category' })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @ApiPropertyOptional({
     example: 'electronics-gadgets',
@@ -22,7 +22,7 @@ export class CreateCategoryDto {
   })
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description!: string;
 
   @ApiProperty({ enum: CategoryStatus, default: CategoryStatus.ACTIVE })
   @IsEnum(CategoryStatus)

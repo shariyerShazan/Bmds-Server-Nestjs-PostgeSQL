@@ -6,7 +6,7 @@ export class CreateBrandDto {
   @ApiProperty({ example: 'Apple', description: 'The name of the brand' })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @ApiPropertyOptional({
     example: 'apple-brand',
@@ -22,7 +22,7 @@ export class CreateBrandDto {
   })
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description!: string;
 
   @ApiProperty({ enum: BrandStatus, default: BrandStatus.ACTIVE })
   @IsEnum(BrandStatus)

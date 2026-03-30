@@ -14,7 +14,7 @@ export class CreateProductDto {
   @ApiProperty({ example: 'iPhone 15 Pro' })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @ApiPropertyOptional({ example: 'iphone-15-pro' })
   @IsString()
@@ -29,17 +29,17 @@ export class CreateProductDto {
   @ApiProperty({ example: 'A3106' })
   @IsString()
   @IsNotEmpty()
-  model: string;
+  model!: string;
 
   @ApiProperty({ example: 1000 })
   @IsNumber()
   @Min(0)
-  costPrice: number;
+  costPrice!: number;
 
   @ApiProperty({ example: 1200 })
   @IsNumber()
   @Min(0)
-  salePrice: number;
+  salePrice!: number;
 
   @ApiPropertyOptional({ example: 50 })
   @IsInt()
@@ -55,7 +55,7 @@ export class CreateProductDto {
   @ApiProperty({ example: 'category_id_here' })
   @IsString()
   @IsNotEmpty()
-  categoryId: string;
+  categoryId!: string;
 
   @ApiPropertyOptional({ enum: ProductStatus, default: ProductStatus.ACTIVE })
   @IsEnum(ProductStatus)

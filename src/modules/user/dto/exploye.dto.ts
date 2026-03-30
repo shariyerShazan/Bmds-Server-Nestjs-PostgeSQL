@@ -60,7 +60,7 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => EmployeeDto)
-  employee: EmployeeDto;
+  employee: EmployeeDto = new EmployeeDto();
 
   @ApiPropertyOptional({ example: 'employee_01' })
   @IsOptional()
@@ -70,19 +70,19 @@ export class CreateEmployeeDto {
   @ApiProperty({ example: 'employee@example.com' })
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @ApiPropertyOptional({ example: '+8801800000000' })
   @IsOptional()
   @IsPhoneNumber()
   @IsNotEmpty()
-  contactNo: string;
+  contactNo!: string;
 
   @ApiProperty({ example: 'employee@example.com', minLength: 6 })
   @IsString()
   @IsNotEmpty()
   @MinLength(6)
-  password: string;
+  password!: string;
 
   @ApiPropertyOptional({ enum: Lang, default: Lang.ENG })
   @IsEnum(Lang)
@@ -112,5 +112,5 @@ export class CreateEmployeeDto {
 
 export class ChangeStatusDto {
   @ApiProperty({ enum: Status, example: Status.ACTIVE })
-  status: Status;
+  status: Status = 'ACTIVE';
 }
