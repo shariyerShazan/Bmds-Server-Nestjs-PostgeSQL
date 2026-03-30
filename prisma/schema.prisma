@@ -6,3 +6,191 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// User Models
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  username  String?   @default("")
+  contactNo String    @default("")
+  password  String
+  lang      Lang      @default(ENG)
+  role      Role      @default(EMPLOYEE)
+  avatar    String?   @default("")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  status    Status    @default(ACTIVE)
+  dob       DateTime?
+  fcmToken  String?   @default("")
+  admin     Admin?
+  employee  Employee?
+
+  @@index([email, role, status, createdAt])
+  @@map("users")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  fullName  String
+  address   String?
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model Employee {
+  id         String      @id @default(uuid())
+  userId     String      @unique
+  fullName   String?
+  bloodGroup BloodGroup?
+  gender     Gender?
+  address    String?     @default("")
+  city       String?     @default("")
+  zip        String?     @default("")
+  state      String?     @default("")
+  country    String?     @default("")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  user       User        @relation(fields: [userId], references: [id])
+  reports    Report[]
+
+  @@index([createdAt])
+  @@map("employees")
+}
+
+// Brand Models
+model Brand {
+  id          String      @id @default(uuid())
+  name        String
+  slug        String?     @unique
+  description String
+  status      BrandStatus @default(ACTIVE)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  products    Product[]
+
+  @@map("brands")
+}
+
+// Category Models
+model Category {
+  id          String         @id @default(uuid())
+  name        String
+  slug        String?        @unique
+  description String
+  status      CategoryStatus @default(ACTIVE)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  products    Product[]
+
+  @@map("categories")
+}
+
+// Product Models
+model Product {
+  id          String        @id @default(uuid())
+  name        String
+  slug        String?       @unique
+  description String?
+  model       String
+  costPrice   Float         @default(0)
+  salePrice   Float         @default(0)
+  initStock   Int           @default(0)
+  barCode     String?
+  categoryId  String
+  category    Category      @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  brand       Brand?        @relation(fields: [brandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  status      ProductStatus @default(ACTIVE)
+  brandId     String?
+  reports     Report[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("products")
+}
+
+// Report Models
+model Report {
+  id             String        @id @default(uuid())
+  productId      String
+  product        Product       @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  employeeId     String?
+  employee       Employee?     @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  qty            Int           @default(0)
+  totalCostPrice Float         @default(0)
+  totalSalePrice Float         @default(0)
+  profitLoss     Float         @default(0)
+  type           StockType     @default(IN)
+  status         ReportStatus? @default(PENDING)
+  createdBy      Role?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("reports")
+}
+
+// Enums
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EMPLOYEE
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum Lang {
+  ENG
+  RON
+  HUN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHERS
+}
+
+enum BloodGroup {
+  A_POSITIVE
+  A_NEGATIVE
+  B_POSITIVE
+  B_NEGATIVE
+  AB_POSITIVE
+  AB_NEGATIVE
+  O_POSITIVE
+  O_NEGATIVE
+}
+
+enum BrandStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum CategoryStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum StockType {
+  IN
+  OUT
+}
+
+enum ReportStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DELETED
+}
