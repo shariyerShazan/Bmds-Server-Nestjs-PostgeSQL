@@ -101,8 +101,8 @@ model Product {
   initStock   Int           @default(0)
   barCode     String?
   categoryId  String
-  category    Category      @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  brand       Brand?        @relation(fields: [brandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  brand      Brand?    @relation(fields: [brandId], references: [id], onDelete: Cascade)
   status      ProductStatus @default(ACTIVE)
   brandId     String?
   reports     Report[]
@@ -116,9 +116,9 @@ model Product {
 model Report {
   id             String        @id @default(uuid())
   productId      String
-  product        Product       @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: SetNull)
   employeeId     String?
-  employee       Employee?     @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   qty            Int           @default(0)
   totalCostPrice Float         @default(0)
   totalSalePrice Float         @default(0)

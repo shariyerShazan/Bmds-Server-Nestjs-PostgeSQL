@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -180,6 +181,24 @@ export class AuthController {
       statusCode: HttpStatus.OK,
       message: 'Email changed successfully',
       data: result,
+    };
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(@Req() req: any, @Res({ passthrough: true }) res: Response) {
+    const user = req.user;
+    await this.authService.logout(user.id);
+
+    res.clearCookie('accessToken', {
+      path: '/',
+      httpOnly: true,
+    });
+
+    return {
+      success: true,
+      message: 'Logged out successfully',
     };
   }
 }
