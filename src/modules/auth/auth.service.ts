@@ -236,4 +236,12 @@ export class AuthService {
 
     return { message: 'Email updated successfully' };
   }
+
+  async logout(userId: string) {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { fcmToken: null }, // Optional: clear FCM token on logout if desired
+    });
+    return { message: 'Logged out successfully' };
+  }
 }
