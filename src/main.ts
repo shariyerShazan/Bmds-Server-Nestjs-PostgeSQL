@@ -47,6 +47,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1');
   app.enableCors({
     origin: [
+      'https://bmds-frontend-next-js.vercel.app',
+      'bmds.bd',
       'http://localhost:3000',
       'http://localhost:3001',
       'http://localhost:3002',
