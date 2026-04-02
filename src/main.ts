@@ -48,7 +48,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'https://bmds-frontend-next-js.vercel.app',
-      'bmds.bd',
+      'https://bmds.bd',
       'http://localhost:3000',
       'http://localhost:3001',
       'http://localhost:3002',
