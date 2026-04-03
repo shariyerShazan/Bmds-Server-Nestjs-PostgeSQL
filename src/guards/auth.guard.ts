@@ -33,11 +33,19 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest<Request>();
 
-    // Extract token from cookies
-    const token = request.cookies?.['accessToken'];
+    // Extract token from cookies or Authorization header
+    const cookieToken = request.cookies?.['accessToken'];
+    const authHeader = request.headers.authorization;
+    const bearerToken = authHeader?.startsWith('Bearer ')
+      ? authHeader.split(' ')[1]
+      : authHeader;
+
+    const token = cookieToken || bearerToken;
 
     if (!token) {
-      throw new UnauthorizedException('Access token is missing from cookies');
+      throw new UnauthorizedException(
+        'Access token is missing from cookies or Authorization header',
+      );
     }
 
     try {
