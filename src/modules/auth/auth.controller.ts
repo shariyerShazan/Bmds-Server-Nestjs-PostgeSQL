@@ -191,12 +191,13 @@ export class AuthController {
     const user = req.user;
     await this.authService.logout(user.id);
 
-   res.clearCookie("accessToken", {
-  httpOnly: true,
-  secure: true,
-  sameSite: "strict",
-  path: "/",
-});
+    res.cookie('accessToken', "", {
+      maxAge: 0,
+      httpOnly: true,
+        secure: true,  
+      sameSite: 'none',
+      path: '/',
+    });
     return {
       success: true,
       message: 'Logged out successfully',
