@@ -65,7 +65,6 @@ export class AnalyticsService {
       }),
     ]);
 
-    // ৩. চার্ট ডেটা এগ্রিগেশন লজিক (সরাসরি সার্ভিসে)
     const map = new Map<string, { count: number; value: number }>();
 
     reportsForChart.forEach((item) => {
@@ -107,17 +106,15 @@ export class AnalyticsService {
     }));
 
     return {
-      summary: {
-        totalCategories,
-        totalBrands,
-        totalProducts,
-        totalReports,
-        totalRevenue: incomeSummary._sum.totalSalePrice || 0,
-        totalCost: incomeSummary._sum.totalCostPrice || 0,
-        profit:
-          (incomeSummary._sum.totalSalePrice || 0) -
-          (incomeSummary._sum.totalCostPrice || 0),
-      },
+      totalCategories,
+      totalBrands,
+      totalProducts,
+      totalReports,
+      totalRevenue: incomeSummary._sum.totalSalePrice || 0,
+      totalCost: incomeSummary._sum.totalCostPrice || 0,
+      profit:
+        (incomeSummary._sum.totalSalePrice || 0) -
+        (incomeSummary._sum.totalCostPrice || 0),
       chartData,
     };
   }
