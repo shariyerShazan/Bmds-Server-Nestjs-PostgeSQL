@@ -12,7 +12,7 @@ export class AnalyticsController {
   constructor(private readonly analyticsService: AnalyticsService) {}
 
   @Get()
-  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN , Role.EMPLOYEE)
   async getAnalytics(@Query('filterBy') filterBy: FilterBy) {
     const result = await this.analyticsService.getDashboardAnalytics(filterBy);
 
